@@ -1,8 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Clock from './Clock';
+import {applyMiddleware, compose, createStore} from 'redux';
+import thunk from 'redux-thunk';
+import reducer from './reducers';
+import Countdown from './Countdown';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<Clock color="red"/>, document.getElementById('root'));
+//allows asynchronous actions
+const middleware = [thunk];
+const enhancers = [];
+//install chrome extension for the redux devtools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export const store = createStore(
+  reducer,
+  {},
+  composeEnhancers(applyMiddleware(...middleware), ...enhancers)
+);
+
+const render = () =>
+  ReactDOM.render(
+    <Countdown {...store.getState()} />,
+    document.getElementById('root')
+  );
+
+store.subscribe(render);
+render();
+
 registerServiceWorker();
