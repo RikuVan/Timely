@@ -1,39 +1,29 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import logo from './logo.svg';
 import './Countdown.css';
 import PropTypes from 'prop-types';
-import {delay, formatTimeFromSeconds} from './utils.js';
-import {store} from './index.js';
+import {formatTimeFromSeconds} from './utils.js';
+import {tick, initTimer, startTimer} from './actions';
 
 const countdowns = [10, 20, 300];
 
 class Countdown extends Component {
-  tasks = [];
-
-  setCountdown = i => {
-    const int = window.setInterval(
-      () => store.dispatch({type: 'TICK', payload: {id: `timer${i + 1}`}}),
-      1000
+  async componentDidMount() {
+    // not really needed here but if we want to ensure promises resolve before the next
+    // function is called, we can use async/await
+    await countdowns.forEach((c, i) =>
+      this.props.initTimer({id: `timer${i + 1}`, seconds: c})
     );
-    this.tasks.push(int);
-  };
 
-  componentDidMount() {
-    countdowns.forEach((c, i) =>
-      store.dispatch({type: 'INIT', payload: {id: `timer${i + 1}`, seconds: c}})
-    );
     countdowns.forEach((c, i) => {
-      delay(c * 250, () => this.setCountdown(i));
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {timers} = this.props;
-    const timerIds = Object.keys(timers);
-    timerIds.forEach((key, i) => {
-      if (timers[key] && timers[key].seconds === 0) {
-        window.clearInterval(this.tasks[i]);
-      }
+      // here we can now dispatch a function because of the thunk middleware
+      this.props.startTimer({
+        id: `timer${i + 1}`,
+        seconds: c,
+        waitTime: i <= 1 ? c * 250 : null
+      });
     });
   }
 
@@ -64,4 +54,9 @@ Countdown.propTypes = {
   timers: PropTypes.object.isRequired
 };
 
-export default Countdown;
+const mapStateToProps = state => ({timers: state.timers});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({tick, initTimer, startTimer}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Countdown);

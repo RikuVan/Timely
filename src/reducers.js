@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import {TICK, INIT} from './actions';
 /***
  * Reducer
  * making sure you don't mutate state inside the reducer
@@ -10,14 +11,13 @@ import {combineReducers} from 'redux';
 // it is not the only see http://redux.js.org/docs/faq/Reducers.html#reducers-use-switch
 
 const timers = (state = {}, action) => {
-  console.log(state, action);
   switch (action.type) {
-    case 'INIT':
+    case INIT:
       return {
         ...state,
         [action.payload.id]: {seconds: action.payload.seconds}
       };
-    case 'TICK':
+    case TICK:
       const timer = state[action.payload.id];
       return {
         ...state,
