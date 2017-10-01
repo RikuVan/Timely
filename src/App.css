@@ -22,10 +22,6 @@
   font-size: large;
 }
 
-.Clock {
-  font-size: 2em;
-}
-
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

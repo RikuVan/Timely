@@ -4,5 +4,5 @@ import './index.css';
 import Clock from './Clock';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<Clock color="red"/>, document.getElementById('root'));
+ReactDOM.render(<Clock />, document.getElementById('root'));
 registerServiceWorker();
