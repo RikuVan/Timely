@@ -11,5 +11,6 @@ export const initTimer = ({id, seconds}) => ({
 
 // if needed we also have access to the store with thunks, the second argument injected with dispatch
 export const startTimer = ({id, seconds, waitTime = 0}) => dispatch => {
-  return delay(waitTime, () => generateTicks(() => dispatch(tick({id})), seconds))
+  dispatch(initTimer({id, seconds}));
+  return delay(waitTime, () => generateTicks(() => dispatch(tick({id})), seconds));
 };

@@ -13,6 +13,13 @@ export const formatTime = date =>
     R.map(x => padNumber(x, '00'))
   )([date.getHours(), date.getMinutes(), date.getSeconds()]);
 
+/**
+ * Can optionally pass delay an action wrapped in dispatch
+ * @param ms
+ * @param action
+ * @returns {Promise}
+ */
+
 export const delay = (ms, action = () => {}) => {
   let timeoutId;
   const promise = new Promise(resolve => {
@@ -66,6 +73,45 @@ export const generateTicks = (action, ticks) => co(function*() {
 });
 
 /**
+ * Lighten
+ * const NewColor = LightenDarkenColor("#F06D06", 20);
+ * Darken
+ * const NewColor = LightenDarkenColor("#F06D06", -20);
+ * @param col
+ * @param amt
+ * @returns {string}
+ * @constructor
+ */
+
+export const lightenDarkenColor = (col, amt) => {
+  let usePound = false;
+
+  if (col[0] === "#") {
+    col = col.slice(1);
+    usePound = true;
+  }
+
+  const num = parseInt(col,16);
+
+  let r = (num >> 16) + amt;
+
+  if (r > 255) r = 255;
+  else if  (r < 0) r = 0;
+
+  let b = ((num >> 8) & 0x00FF) + amt;
+
+  if (b > 255) b = 255;
+  else if  (b < 0) b = 0;
+
+  let g = (num & 0x0000FF) + amt;
+
+  if (g > 255) g = 255;
+  else if (g < 0) g = 0;
+
+  return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+};
+
+/**
  * This is a naive helper to resolve promises in a generator and handle next/done
  * @param genFn
  * @returns {Promise}
@@ -91,7 +137,6 @@ function co(genFn) {
   return p;
 }
 
-
 function padNumber(num, pad) {
   const str = `${num}`;
   return pad.substring(0, pad.length - str.length) + str;
@@ -100,3 +145,4 @@ function padNumber(num, pad) {
 function floor(v) {
   return Math.floor(v);
 }
+

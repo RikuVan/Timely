@@ -5,7 +5,7 @@ import {Provider} from 'react-redux'
 import {applyMiddleware, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import reducer from './reducers';
-import Countdown from './Countdown';
+import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 //allows asynchronous actions
@@ -22,7 +22,7 @@ export const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <Countdown />
+    <App />
   </Provider>,
   document.getElementById('root'),
 );
