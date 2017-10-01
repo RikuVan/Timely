@@ -2,13 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {applyMiddleware, compose, createStore} from 'redux';
-import thunk from 'redux-thunk';
 import reducer from './reducers';
 import Countdown from './Countdown';
 import registerServiceWorker from './registerServiceWorker';
 
 //allows asynchronous actions
-const middleware = [thunk];
+const middleware = [];
 const enhancers = [];
 //install chrome extension for the redux devtools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -19,13 +18,9 @@ export const store = createStore(
   composeEnhancers(applyMiddleware(...middleware), ...enhancers)
 );
 
-const render = () =>
-  ReactDOM.render(
-    <Countdown {...store.getState()} />,
-    document.getElementById('root')
-  );
-
-store.subscribe(render);
-render();
+ReactDOM.render(
+  <Countdown {...store.getState()} />,
+  document.getElementById('root')
+);
 
 registerServiceWorker();

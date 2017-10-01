@@ -10,19 +10,7 @@ import {combineReducers} from 'redux';
 // it is not the only see http://redux.js.org/docs/faq/Reducers.html#reducers-use-switch
 
 const timers = (state = {}, action) => {
-  console.log(state, action);
   switch (action.type) {
-    case 'INIT':
-      return {
-        ...state,
-        [action.payload.id]: {seconds: action.payload.seconds}
-      };
-    case 'TICK':
-      const timer = state[action.payload.id];
-      return {
-        ...state,
-        [action.payload.id]: {...timer, seconds: --timer.seconds}
-      };
     default:
       return state;
   }
