@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import {Provider} from 'react-redux'
 import {applyMiddleware, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import reducer from './reducers';
@@ -19,13 +20,11 @@ export const store = createStore(
   composeEnhancers(applyMiddleware(...middleware), ...enhancers)
 );
 
-const render = () =>
-  ReactDOM.render(
-    <Countdown {...store.getState()} />,
-    document.getElementById('root')
-  );
-
-store.subscribe(render);
-render();
+ReactDOM.render(
+  <Provider store={store}>
+    <Countdown />
+  </Provider>,
+  document.getElementById('root'),
+);
 
 registerServiceWorker();
