@@ -1,6 +1,6 @@
-# Exercise 1: State to Redux store, dispatching actions, and working with lists in React
+# Exercise 2: State to Redux store, dispatching actions, and working with lists in React
 
-1. `<Countdown />` should be able to display N number of countdown timers. When the time runs out
+## TASK: `<Countdown />` should be able to display N number of countdown timers. When the time runs out
 on any one timer, that timer should read "BOOM!" The state of our timers should be in the Redux store.
 
 - In `index.js` you will need to wrap your `ReactDOM.render` in another render function. Give this function to the store's subscribe method.
@@ -46,3 +46,10 @@ from `utils.js` to display each one. `{seconds === 0 ? 'Boom!' : seconds}` type 
 - After we this all set up, we now have (most) of our countdown data in a global state object. But it will quickly
 get very verbose and complex if you have to import the `store` anywhere you need to use `getState` or `dispatch` Also, at this point we
 can only dispatch synchronous actions that return plain objects. The next task remedies this situation.
+
+### Resources:
+  - [Redux Store](http://redux.js.org/docs/api/Store.html)
+
+  - [Redux Actions](http://redux.js.org/docs/basics/Actions.html)
+  
+  - [Redux Reducers](http://redux.js.org/docs/basics/Reducers.html)
