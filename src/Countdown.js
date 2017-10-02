@@ -8,6 +8,7 @@ import {store} from './index.js';
 const countdowns = [10, 20, 300];
 
 class Countdown extends Component {
+  // You should be able to refactor so you only need to call one action in componentDidMount
   tasks = [];
 
   setCountdown = i => {

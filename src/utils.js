@@ -40,6 +40,51 @@ export const formatTimeFromSeconds = totalSeconds => {
   return `${hours}${minutes}${seconds}`;
 };
 
+/**
+ * Can optionally pass delay an action wrapped in dispatch
+ * @param ms
+ * @param action
+ * @returns {Promise}
+ */
+
+export const delay = (ms, action = () => {}) => {
+  let task;
+  const promise = new Promise(resolve => {
+    task = setTimeout(() => resolve(action()), ms);
+  });
+  promise.cancel = () => clearTimeout(task);
+  promise.cancel = () => clearTimeout(task);
+  return promise;
+};
+
+/**
+ * Can optionally pass callAtInterval an action wrapped in dispatch
+ * to cancel, assign to variable and call cancel()
+ * @param ms
+ * @param action
+ * @returns {Promise}
+ */
+
+export const callAtInterval = (s, action = () => {}) => {
+  let time = s;
+  let task;
+
+  const promise = new Promise(resolve => {
+    task = setInterval(() => {
+      if (--time < 0) {
+        clearInterval(task);
+        resolve();
+      } else {
+        return action();
+      }
+    }, 1000);
+  });
+
+  promise.cancel = () => clearInterval(task);
+
+  return promise;
+};
+
 function _padNumber(num, pad) {
   const str = `${num}`;
   return pad.substring(0, pad.length - str.length) + str;
