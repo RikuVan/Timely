@@ -13,15 +13,6 @@ export const formatTime = date =>
     R.map(x => padNumber(x, '00'))
   )([date.getHours(), date.getMinutes(), date.getSeconds()]);
 
-export const delay = (ms, action = () => {}) => {
-  let timeoutId;
-  const promise = new Promise(resolve => {
-    timeoutId = setTimeout(() => resolve(action()), ms);
-  });
-  promise.cancel = () => clearTimeout(timeoutId);
-  return promise;
-};
-
 const maybeShow = unit => R.ifElse(R.gt(R.__, 0), v => `${v}${unit} `, R.always(''));
 
 /**
@@ -52,45 +43,49 @@ export const formatTimeFromSeconds = totalSeconds => {
 };
 
 /**
- * Allows us to dispatch N amount of ticks at one second intervals
- * @param action wrapped in dispatch
- * @param ticks (seconds)
- */
-
-export const generateTicks = (action, ticks) => co(function*() {
-  let t = ticks;
-  while (t > 0) {
-    yield delay(1000, action);
-    t--
-  }
-});
-
-/**
- * This is a naive helper to resolve promises in a generator and handle next/done
- * @param genFn
+ * Can optionally pass delay an action wrapped in dispatch
+ * @param ms
+ * @param action
  * @returns {Promise}
  */
 
-function co(genFn) {
-  const p = new Promise((resolve) => {
-    const iter = genFn();
+export const delay = (ms, action = () => {}) => {
+  let task;
+  const promise = new Promise(resolve => {
+    task = setTimeout(() => resolve(action()), ms);
+  });
+  promise.cancel = () => clearTimeout(task);
+  promise.cancel = () => clearTimeout(task);
+  return promise;
+};
 
-    function nextIteration() {
-      const result = iter.next();
-      if (result.done) {
-        return;
+/**
+ * Can optionally pass callAtInterval an action wrapped in dispatch
+ * to cancel, assign to variable and call cancel()
+ * @param ms
+ * @param action
+ * @returns {Promise}
+ */
+
+export const callAtInterval = (s, action = () => {}) => {
+  let time = s;
+  let task;
+
+  const promise = new Promise(resolve => {
+    task = setInterval(() => {
+      if (--time < 0) {
+        clearInterval(task);
+        resolve();
+      } else {
+        return action();
       }
+    }, 1000);
+  });
 
-      result.value.then(() => {
-        nextIteration()
-      })
+  promise.cancel = () => clearInterval(task);
 
-    }
-    nextIteration()
-  })
-  return p;
-}
-
+  return promise;
+};
 
 function padNumber(num, pad) {
   const str = `${num}`;

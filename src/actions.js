@@ -1,4 +1,4 @@
-import {generateTicks, delay} from './utils';
+import {callAtInterval, delay} from './utils';
 export const TICK = 'TIMERS/TICK';
 export const INIT = 'TIMERS/INIT';
 
@@ -13,6 +13,6 @@ export const initTimer = ({id, seconds}) => ({
 export const startTimer = ({id, seconds, waitTime = 0}) => dispatch => {
   dispatch(initTimer({id, seconds}));
   return delay(waitTime, () =>
-    generateTicks(() => dispatch(tick({id})), seconds)
+    callAtInterval(seconds, () => dispatch(tick({id})))
   );
 };
