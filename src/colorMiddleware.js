@@ -13,37 +13,15 @@ const countdownColors = Array.from(Array(11).keys())
   .reverse();
 
 const colorMiddleware = store => next => action => {
-  const state = store.getState();
-  const timers = R.propOr({}, 'timers', state);
-  const color = R.path(['colors', 'background'], state);
 
-  const lowestTime = Object.keys(timers)
-    .filter(key => timers[key].active)
-    .reduce((time, key) => {
-      const seconds = timers[key].seconds;
-      return seconds < time ? seconds : time;
-    }, 100);
+  // here we can check if a certain action was called and dispatch a new action
+  // if (action.type === SOME_ACTION) {
+  //   do something here
+  // }
 
-  if (action.type === TICK) {
-    if (
-      lowestTime >= 0 &&
-      lowestTime <= 10 &&
-      color !== countdownColors[lowestTime]
-    ) {
-      store.dispatch(
-        changeColor({key: 'background', color: countdownColors[lowestTime]})
-      );
-    }
-  }
-
-  if (action.type === INIT) {
-    if (lowestTime > 10 && color !== DEFAULT_BACKGROUND) {
-      store.dispatch(
-        changeColor({key: 'background', color: DEFAULT_BACKGROUND})
-      );
-    }
-  }
-  next(action);
+  //if we don't call next(action) our action will dispatched action will never update the reducer
+  // which sometimes may be desired behaviour (not usually)
+  //next(action);
 };
 
 export default colorMiddleware;

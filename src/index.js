@@ -7,10 +7,10 @@ import thunk from 'redux-thunk';
 import reducer from './reducers';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import colorMiddleware from './colorMiddleware';
+//import colorMiddleware from './colorMiddleware';
 
 //allows asynchronous actions
-const middleware = [thunk, colorMiddleware];
+const middleware = [thunk];
 const enhancers = [];
 //install chrome extension for the redux devtools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
