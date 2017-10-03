@@ -1,5 +1,4 @@
 import React from 'react';
-import limitVisibility from './limitVisibility';
 import PropTypes from 'prop-types';
 
 const SecretMessageStyle = {
@@ -20,8 +19,7 @@ const SecretMessage = ({message}) => (
 );
 
 SecretMessage.propTypes = {
-  message: PropTypes.string.isRequired,
-  visibleFor: PropTypes.number
+  message: PropTypes.string.isRequired
 };
 
-export default limitVisibility(SecretMessage);
+export default SecretMessage;

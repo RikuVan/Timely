@@ -9,7 +9,7 @@ const App = () => (
       <img src={logo} className="App-logo" alt="logo" />
       <h1 className="App-title">Timely</h1>
     </header>
-    <SecretMessage message="ticket #67832 is assigned to you" visibleFor={10} />
+    <SecretMessage message="ticket #67832 is assigned to you" />
   </div>
 );
 
