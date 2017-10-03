@@ -7,7 +7,6 @@ import thunk from 'redux-thunk';
 import reducer from './reducers';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-//import colorMiddleware from './colorMiddleware';
 
 //allows asynchronous actions
 const middleware = [thunk];

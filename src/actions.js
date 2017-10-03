@@ -3,7 +3,6 @@ export const TICK = 'TIMERS/TICK';
 export const INIT = 'TIMERS/INIT';
 export const PAUSE = 'TIMERS/PAUSE';
 export const REGISTER_CANCELLER = 'TIMERS/REGISTER_CANCELLER';
-export const CHANGE_COLOR = 'COLORS/CHANGE_COLOR';
 
 export const tick = ({id}) => ({type: TICK, payload: {id}});
 
@@ -23,4 +22,3 @@ export const startTimer = ({id, seconds, waitTime = 0}) => dispatch => {
   return doTicks;
 };
 
-export const changeColor = ({key, color}) => ({type: CHANGE_COLOR, payload: {key, color}});

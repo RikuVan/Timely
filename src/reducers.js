@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {TICK, INIT, CHANGE_COLOR, REGISTER_CANCELLER, PAUSE} from './actions';
+import {TICK, INIT, REGISTER_CANCELLER, PAUSE} from './actions';
 /***
  * Reducer
  * making sure you don't mutate state inside the reducer
@@ -9,18 +9,6 @@ import {TICK, INIT, CHANGE_COLOR, REGISTER_CANCELLER, PAUSE} from './actions';
 
 // While switch statements have become the most common way to handle actions,
 // it is not the only see http://redux.js.org/docs/faq/Reducers.html#reducers-use-switch
-
-const colors = (state = {background: '#fff'}, action) => {
-  switch (action.type) {
-    case CHANGE_COLOR: {
-      return {
-        [action.payload.key]: action.payload.color
-      };
-    }
-    default:
-      return state;
-  }
-};
 
 const timers = (state = {}, action) => {
   switch (action.type) {
@@ -61,8 +49,7 @@ const timers = (state = {}, action) => {
  * @type {Reducer<S>}
  */
 const reducer = combineReducers({
-  timers,
-  colors
+  timers
 });
 
 export default reducer;

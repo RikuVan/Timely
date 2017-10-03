@@ -1,9 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 import Timer from './Timer';
-import R from 'ramda';
 
 const App = ({color}) => (
   <div className="App" style={{backgroundColor: color}}>
@@ -19,8 +17,4 @@ const App = ({color}) => (
   </div>
 );
 
-const mapStateToProps = state => ({
-  color: R.pathOr('black', ['colors', 'background'], state)
-});
-
-export default connect(mapStateToProps)(App);
+export default App;
