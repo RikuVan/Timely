@@ -4,6 +4,8 @@
 Assuming you already have `yarn` and `node` installed clone this repo and run:
 
 ```
+yarn install
+
 yarn run build
 
 yarn start
