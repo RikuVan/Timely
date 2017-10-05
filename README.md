@@ -19,4 +19,4 @@ git checkout exercise-1
 ```
 
 ## Materials
-[Sides](https://github.com/RikuVan/Timely)
+[Sides](https://rikuvan.github.io/Timely/)
