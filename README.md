@@ -17,3 +17,6 @@ This workshop consists of five exercises. Each exercise is found in its own bran
 ```
 git checkout exercise-1
 ```
+
+## Materials
+[Sides](https://github.com/RikuVan/Timely)
