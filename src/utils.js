@@ -56,7 +56,6 @@ export const delay = (ms, action = () => {}) => {
     task = setTimeout(() => resolve(action()), ms);
   });
   promise.cancel = () => clearTimeout(task);
-  promise.cancel = () => clearTimeout(task);
   return promise;
 };
 
